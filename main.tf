@@ -2,8 +2,12 @@ variable "key_name" {}
 variable "aws_region" {}
 variable "aws_ami" {}
 variable "elb_instance_size" {}
+variable "access_key" {}
+variable "secret_key" {}
 
 provider "aws" {
+  access_key = "${var.access_key}"
+  secret_key = "${var.secret_key}"
   region = "${var.aws_region}"
 }
 
@@ -149,7 +153,7 @@ resource "aws_instance" "web" {
     connection {
       type     = "ssh"
       user = "ec2-user"
-      private_key = "${file("personal-east.pem")}"
+      private_key = "${file("${var.key_name}.pem")}"
       agent = false
     }
   }
@@ -160,7 +164,7 @@ resource "aws_instance" "web" {
     connection {
       type     = "ssh"
       user = "ec2-user"
-      private_key = "${file("personal-east.pem")}"
+      private_key = "${file("${var.key_name}.pem")}"
       agent = false
     }
   }
@@ -177,7 +181,7 @@ resource "aws_instance" "web" {
     connection {
       type     = "ssh"
       user = "ec2-user"
-      private_key = "${file("personal-east.pem")}"
+      private_key = "${file("${var.key_name}.pem")}"
       agent = false
     }
   }
